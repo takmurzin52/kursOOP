@@ -11,9 +11,14 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load(), 750, 600);
+        stage.setTitle("Heating System");
         stage.setScene(scene);
+        stage.setMinWidth(750);
+        stage.setMaxWidth(750);
+        stage.setMinHeight(600);
+        stage.setMaxHeight(600);
+
         stage.show();
     }
 

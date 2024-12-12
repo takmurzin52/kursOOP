@@ -1,16 +1,288 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.kurs.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.kurs.HelloController">
+   <children>
+      <GridPane alignment="CENTER" hgap="35.0" layoutY="65.0" prefHeight="280.0" prefWidth="445.0" vgap="75.0" AnchorPane.bottomAnchor="255.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="65.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <children>
+            <VBox prefHeight="130.0" prefWidth="215.0" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
+               <children>
+                  <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="173.0" text="Гостиная" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="-5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Температура: 20°C">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="39.0" text="Положение клапана:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+                     <VBox.margin>
+                        <Insets left="150.0" top="-23.0" />
+                     </VBox.margin>
+                  </Circle>
+                  <Label text="Присутствие людей: +">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="11.0" prefWidth="173.0" text="Недельное расписание" onAction="#showScheduleDialog"/>
+               </children></VBox>
+            <VBox layoutX="20.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;" GridPane.columnIndex="1">
+               <children>
+                  <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="173.0" text="Рабочий кабинет" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="-5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Температура: 20°C">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Положение клапана:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="ORANGE" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+                     <VBox.margin>
+                        <Insets left="150.0" top="-23.0" />
+                     </VBox.margin>
+                  </Circle>
+                  <Label text="Присутствие людей: +">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="173.0" text="Недельное расписание" onAction="#showScheduleDialog"/>
+               </children></VBox>
+            <VBox layoutX="20.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;" GridPane.rowIndex="1">
+               <children>
+                  <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="173.0" text="Кухня" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="-5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Температура: 20°C">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Положение клапана:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="ORANGE" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+                     <VBox.margin>
+                        <Insets left="150.0" top="-23.0" />
+                     </VBox.margin>
+                  </Circle>
+                  <Label text="Присутствие людей: +">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="11.0" prefWidth="173.0" text="Недельное расписание" onAction="#showScheduleDialog"/>
+               </children></VBox>
+            <VBox layoutX="20.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="173.0" text="Ванная" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="-5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Температура: 20°C">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Положение клапана:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="GREEN" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+                     <VBox.margin>
+                        <Insets left="150.0" top="-23.0" />
+                     </VBox.margin>
+                  </Circle>
+                  <Label text="Присутствие людей: +">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="173.0" text="Недельное расписание" onAction="#showScheduleDialog"/>
+               </children></VBox>
+         </children>
+      </GridPane>
+      <GridPane alignment="CENTER" layoutY="369.0" prefHeight="113.0" prefWidth="720.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="125.99999237060547" minWidth="10.0" prefWidth="120.99999237060547" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="141.00000762939453" minWidth="10.0" prefWidth="141.00000762939453" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="157.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="145.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="149.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="38.4" minHeight="10.0" prefHeight="18.4" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="68.4" minHeight="10.0" prefHeight="55.20000000000001" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="70.4" minHeight="10.0" prefHeight="44.400000000000006" valignment="CENTER" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="157.0" text="Гостиная" textAlignment="CENTER" GridPane.columnIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="160.0" layoutY="8.0" prefHeight="27.0" prefWidth="157.0" text="Рабочий кабинет" textAlignment="CENTER" GridPane.columnIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="310.0" layoutY="8.0" prefHeight="27.0" prefWidth="157.0" text="Кухня" textAlignment="CENTER" GridPane.columnIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="460.0" layoutY="8.0" prefHeight="27.0" prefWidth="157.0" text="Ванная" textAlignment="CENTER" GridPane.columnIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="127.0" text="Рабочая t°C:" textAlignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Italic" size="17.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="spinnerWorkRoom" layoutX="136.0" layoutY="38.0" prefHeight="26.0" prefWidth="105.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Spinner fx:id="spinnerLivingRoom" layoutX="290.0" layoutY="37.0" prefHeight="26.0" prefWidth="105.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Spinner fx:id="spinnerKitchen" layoutX="290.0" layoutY="37.0" prefHeight="26.0" prefWidth="105.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Spinner fx:id="spinnerBathroom" layoutX="436.0" layoutY="37.0" prefHeight="26.0" prefWidth="105.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" layoutX="10.0" layoutY="37.0" prefHeight="18.0" prefWidth="127.0" text="Параметр М:" textAlignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Italic" size="17.0" />
+               </font>
+            </Label>
+            <Slider blockIncrement="1.0" majorTickUnit="1.0" max="5.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="0" prefHeight="44.0" prefWidth="122.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Slider blockIncrement="1.0" layoutX="134.0" layoutY="84.0" majorTickUnit="1.0" max="5.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="0" prefHeight="44.0" prefWidth="122.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Slider blockIncrement="1.0" layoutX="292.0" layoutY="80.0" majorTickUnit="1.0" max="5.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="0" prefHeight="44.0" prefWidth="122.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Slider blockIncrement="1.0" layoutX="444.0" layoutY="80.0" majorTickUnit="1.0" max="5.0" maxHeight="-Infinity" maxWidth="-Infinity" min="1.0" minorTickCount="0" prefHeight="44.0" prefWidth="122.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Label alignment="CENTER" layoutX="219.0" prefHeight="27.0" prefWidth="312.0" text="Домашняя система отопления" textAlignment="CENTER" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="219.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="208.0" layoutY="523.0" mnemonicParsing="false" text="Старт симуляции" AnchorPane.leftAnchor="208.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="375.0" layoutY="523.0" mnemonicParsing="false" text="Остановка симуляции" AnchorPane.rightAnchor="213.39999999999998">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <VBox alignment="TOP_CENTER" layoutX="568.0" layoutY="65.0" prefHeight="145.0" prefWidth="152.0">
+         <children>
+            <Label alignment="TOP_LEFT" prefHeight="26.0" prefWidth="181.0" text="Время суток:" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <Label prefHeight="22.0" prefWidth="181.0" text="День">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="21.0" layoutY="10.0" prefHeight="26.0" prefWidth="167.0" text="День недели:" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label layoutX="53.0" layoutY="36.0" prefHeight="22.0" prefWidth="177.0" text="Понедельник">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label layoutX="21.0" layoutY="57.0" prefHeight="26.0" prefWidth="176.0" text="Расход топлива:" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="53.0" layoutY="83.0" prefHeight="22.0" prefWidth="167.0" text="0000">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

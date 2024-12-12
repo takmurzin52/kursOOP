@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="252.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.kurs.ScheduleDialogController">
+   <children>
+      <Label alignment="CENTER" layoutY="7.0" prefHeight="27.0" prefWidth="252.0" text="Недельное расписание" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="52.0" text="Понедельник">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="mondayCheckBox" layoutX="130.0" layoutY="52.0" mnemonicParsing="false" text="Присутствие">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="15.0" layoutY="84.0" text="Вторник" AnchorPane.topAnchor="84.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="tuesdayCheckBox" layoutX="131.0" layoutY="84.0" mnemonicParsing="false" text="Присутствие" AnchorPane.topAnchor="84.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="15.0" layoutY="118.0" text="Среда">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="wednesdayCheckBox" layoutX="131.0" layoutY="118.0" mnemonicParsing="false" text="Присутствие">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="15.0" layoutY="150.0" text="Четверг">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="thursdayCheckBox" layoutX="131.0" layoutY="150.0" mnemonicParsing="false" text="Присутствие">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="15.0" layoutY="184.0" text="Пятница">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="fridayCheckBox" layoutX="131.0" layoutY="184.0" mnemonicParsing="false" text="Присутствие">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="15.0" layoutY="217.0" text="Суббота">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="saturdayCheckBox" layoutX="131.0" layoutY="217.0" mnemonicParsing="false" text="Присутствие">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="14.0" layoutY="249.0" text="Воскресенье">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="sundayCheckBox" layoutX="130.0" layoutY="249.0" mnemonicParsing="false" text="Присутствие">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Button alignment="CENTER" layoutX="78.0" layoutY="285.0" mnemonicParsing="false" onAction="#saveSchedule" prefHeight="30.0" prefWidth="96.0" text="Сохранить" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="78.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
