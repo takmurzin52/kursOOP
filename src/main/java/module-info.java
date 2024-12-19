@@ -13,4 +13,6 @@ module com.example.kurs {
 
     opens com.example.kurs to javafx.fxml;
     exports com.example.kurs;
+    exports com.example.kurs.Sensors;
+    opens com.example.kurs.Sensors to javafx.fxml;
 }

@@ -19,6 +19,10 @@ public class HelloApplication extends Application {
         stage.setMinHeight(600);
         stage.setMaxHeight(600);
 
+        HelloController controller = fxmlLoader.getController();
+        Modeling modeling = new Modeling();
+        controller.setModeling(modeling);
+
         stage.show();
     }
 
