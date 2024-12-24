@@ -12,7 +12,6 @@ public class Timer {
     public Timer() {
         timeline = new Timeline(new KeyFrame(Duration.minutes(1), event -> {
             currentMinute++;
-            updateTimeOfDay();
             System.out.println("Current minute: " + currentMinute + ", Time of day: " + timeOfDay);
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);

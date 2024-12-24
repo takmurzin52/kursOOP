@@ -1,7 +1,5 @@
 package com.example.kurs;
 
-import com.example.kurs.Room;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +38,7 @@ public class Modeling {
         weeklySchedule.setPresence(day, room, presence);
     }
 
-    public void startSimulation() {
+    public void startSimulation(HelloController controller) {
         simulationRunning = true;
         new Thread(() -> {
             while (simulationRunning) {
@@ -59,6 +57,7 @@ public class Modeling {
                 }
                 // Переход к следующему дню
                 weeklySchedule.nextDay();
+                controller.updateUI();
             }
         }).start();
     }

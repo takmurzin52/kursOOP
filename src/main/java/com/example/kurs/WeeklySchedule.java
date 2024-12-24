@@ -31,7 +31,13 @@ public class WeeklySchedule {
     }
 
     public boolean isPresence(String day, String room) {
-        return schedule.get(day).getOrDefault(room, false);
+        if (schedule.containsKey(day)) {
+            Map<String, Boolean> daySchedule = schedule.get(day);
+            if (daySchedule.containsKey(room)) {
+                return daySchedule.get(room);
+            }
+        }
+        return false;
     }
 
     public String getCurrentDay() {

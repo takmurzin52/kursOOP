@@ -222,12 +222,12 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="startSimulationButton" layoutX="208.0" layoutY="523.0" mnemonicParsing="false" text="Старт симуляции" AnchorPane.leftAnchor="208.0">
+      <Button fx:id="startSimulationButton" layoutX="208.0" layoutY="523.0" mnemonicParsing="false" onAction="#startSimulation" text="Старт симуляции" AnchorPane.leftAnchor="208.0">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="stopSimulationButton" layoutX="375.0" layoutY="523.0" mnemonicParsing="false" text="Остановка симуляции" AnchorPane.rightAnchor="213.39999999999998">
+      <Button fx:id="stopSimulationButton" layoutX="375.0" layoutY="523.0" mnemonicParsing="false" onAction="#stopSimulation" text="Остановка симуляции" AnchorPane.rightAnchor="213.39999999999998">
          <font>
             <Font size="14.0" />
          </font>
@@ -284,5 +284,9 @@
             </Label>
          </children>
       </VBox>
+      <Text layoutX="568.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Таймер: 00:00">
+         <font>
+            <Font size="15.0" />
+         </font></Text>
    </children>
 </AnchorPane>

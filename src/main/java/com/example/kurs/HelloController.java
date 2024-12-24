@@ -74,6 +74,9 @@ public class HelloController {
         setupSpinner(spinnerWorkRoom, 16, 25, 16, 1);
         setupSpinner(spinnerKitchen, 17, 21, 17, 1);
         setupSpinner(spinnerBathroom, 24, 26, 24, 1);
+
+        // Устанавливаем начальное значение для dayOfWeekLabel
+        dayOfWeekLabel.setText(modeling.getDayOfWeek());
     }
 
     private void setupSpinner(Spinner<Integer> spinner, int min, int max, int initialValue, int step) {
@@ -129,8 +132,7 @@ public class HelloController {
 
     @FXML
     private void startSimulation() {
-        modeling.startSimulation();
-        updateUI();
+        modeling.startSimulation(this);
     }
 
     @FXML
@@ -138,7 +140,7 @@ public class HelloController {
         modeling.stopSimulation();
     }
 
-    private void updateUI() {
+    protected void updateUI() {
         // Обновление UI на основе данных из модели
         workTemperatureLivingRoom.setText("Температура: " + modeling.getRoomTemperature("Гостиная") + "°C");
         workTemperatureWorkRoom.setText("Температура: " + modeling.getRoomTemperature("Рабочий кабинет") + "°C");
@@ -155,9 +157,9 @@ public class HelloController {
         presenceKitchen.setText("Присутствие людей: " + (modeling.isPresenceDetected("Кухня") ? "+" : "-"));
         presenceBathroom.setText("Присутствие людей: " + (modeling.isPresenceDetected("Ванная") ? "+" : "-"));
 
-        timeOfDayLabel.setText("Время суток: " + modeling.getTimeOfDay());
-        dayOfWeekLabel.setText("День недели: " + modeling.getDayOfWeek());
-        fuelConsumptionLabel.setText("Расход топлива: " + modeling.getTotalFuelConsumption());
+        timeOfDayLabel.setText(modeling.getTimeOfDay());
+        dayOfWeekLabel.setText(modeling.getDayOfWeek());
+        fuelConsumptionLabel.setText("" + modeling.getTotalFuelConsumption());
     }
 
     private javafx.scene.paint.Color getValveColor(int position) {
