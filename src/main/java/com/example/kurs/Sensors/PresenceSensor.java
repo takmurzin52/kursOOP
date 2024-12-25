@@ -1,21 +1,27 @@
 package com.example.kurs.Sensors;
 
-import java.util.Random;
+import com.example.kurs.WeeklySchedule;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 public class PresenceSensor extends Sensor {
-    private Random random;
+    private WeeklySchedule schedule;
 
-    public PresenceSensor(String roomName) {
+    public PresenceSensor(String roomName, WeeklySchedule schedule) {
         super(roomName);
-        random = new Random();
+        this.schedule = schedule;
     }
 
     @Override
     public Boolean getValue() {
-        return random.nextBoolean(); // Пример случайного значения присутствия
+        // Получаем текущий день недели
+        DayOfWeek currentDay = LocalDate.now().getDayOfWeek();
+        // Определяем присутствие на основе расписания
+        return schedule.isPresenceScheduled(currentDay);
     }
 
     public boolean isPresenceDetected() {
-        return (Boolean) getValue();
+        return getValue();
     }
 }

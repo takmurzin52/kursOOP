@@ -54,7 +54,7 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#showScheduleDialog" prefHeight="11.0" prefWidth="173.0" text="Недельное расписание" />
+                  <Button mnemonicParsing="false" onAction="#openLivingRoomScheduleDialog" prefHeight="11.0" prefWidth="173.0" text="Недельное расписание" />
                </children></VBox>
             <VBox layoutX="20.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;" GridPane.columnIndex="1">
                <children>
@@ -89,7 +89,7 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#showScheduleDialog" prefHeight="0.0" prefWidth="173.0" text="Недельное расписание" />
+                  <Button mnemonicParsing="false" onAction="#openWorkRoomScheduleDialog" prefHeight="0.0" prefWidth="173.0" text="Недельное расписание" />
                </children></VBox>
             <VBox layoutX="20.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;" GridPane.rowIndex="1">
                <children>
@@ -124,7 +124,7 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#showScheduleDialog" prefHeight="11.0" prefWidth="173.0" text="Недельное расписание" />
+                  <Button mnemonicParsing="false" onAction="#openKitchenScheduleDialog" prefHeight="11.0" prefWidth="173.0" text="Недельное расписание" />
                </children></VBox>
             <VBox layoutX="20.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
@@ -159,7 +159,7 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#showScheduleDialog" prefHeight="0.0" prefWidth="173.0" text="Недельное расписание" />
+                  <Button mnemonicParsing="false" onAction="#openBathroomScheduleDialog" prefHeight="0.0" prefWidth="173.0" text="Недельное расписание" />
                </children></VBox>
          </children>
       </GridPane>

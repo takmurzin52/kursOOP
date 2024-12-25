@@ -1,5 +1,8 @@
 package com.example.kurs;
 
+import javafx.application.Platform;
+
+import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,11 +22,15 @@ public class Modeling {
         initializeRooms();
     }
 
-    void initializeRooms() {
-        rooms.put("Гостиная", new Room("Гостиная", 20, 1.5));
-        rooms.put("Рабочий кабинет", new Room("Рабочий кабинет", 15, 1.2));
-        rooms.put("Кухня", new Room("Кухня", 10, 1.0));
-        rooms.put("Ванная", new Room("Ванная", 5, 0.8));
+    public Timer getTimer() {
+        return timer;  // Возвращаем объект таймера
+    }
+
+    private void initializeRooms() {
+        rooms.put("Гостиная", new Room("Гостиная", 20, 1.5, 18, 24, new WeeklySchedule()));
+        rooms.put("Рабочий кабинет", new Room("Рабочий кабинет", 15, 1.2, 20, 25, new WeeklySchedule()));
+        rooms.put("Кухня", new Room("Кухня", 10, 1.0, 17, 23, new WeeklySchedule()));
+        rooms.put("Ванная", new Room("Ванная", 5, 0.8, 23, 27, new WeeklySchedule()));
     }
 
     public void setRoomParameters(String roomName, int workTemperature, int M) {
@@ -34,7 +41,7 @@ public class Modeling {
         }
     }
 
-    public void setWeeklySchedule(String day, String room, boolean presence) {
+    public void setWeeklySchedule(DayOfWeek day, String room, boolean presence) {
         weeklySchedule.setPresence(day, room, presence);
     }
 
@@ -43,21 +50,37 @@ public class Modeling {
         new Thread(() -> {
             while (simulationRunning) {
                 for (Room room : rooms.values()) {
-                    boolean presence = room.isPresenceDetected() || weeklySchedule.isPresence(timer.getTimeOfDay(), room.getName());
+                    boolean presence = weeklySchedule.isPresence(weeklySchedule.getCurrentDay(), room.getName()) || room.isPresenceDetected();
                     int targetTemperature = presence ? room.getWorkTemperature() : room.getWaitTemperature();
+
                     room.setValvePosition(getValvePosition(room.getTemperature(), targetTemperature));
                     room.updateTemperature(timer.getTimeOfDay());
+
+                    // Расчет потребления топлива
                     double consumption = room.getArea() * (room.getValvePosition() == 0 ? 0 : room.getValvePosition() == 1 ? 2 : 5);
                     fuelConsumption.addConsumption(consumption);
                 }
-                try {
-                    Thread.sleep(60000); // Ожидание 1 минуты
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                // Обновление интерфейса
+                Platform.runLater(controller::updateUI);
+
+                // Увеличение времени (минуты)
+                timer.incrementMinute(60);  // Увеличиваем время на 60 минут
+
+                // Вывод текущего времени в консоль
+                System.out.println("Текущая минута: " + timer.getCurrentMinute() + ", Время суток: " + timer.getTimeOfDay());
+
                 // Переход к следующему дню
-                weeklySchedule.nextDay();
-                controller.updateUI();
+                if (timer.getCurrentMinute() >= 1440) {  // 1440 минут = 24 часа
+                    timer.incrementDay();  // Переход к следующему дню
+                    timer.incrementMinute(-1440);  // Сбрасываем минуты на начало дня (0)
+                }
+
+                // Ожидание одной симуляционной минуты (1 секунда реального времени)
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }).start();
     }
@@ -86,14 +109,14 @@ public class Modeling {
     }
 
     public String getDayOfWeek() {
-        return weeklySchedule.getCurrentDay();
+        return weeklySchedule.getCurrentDay().toString();
     }
 
     public double getTotalFuelConsumption() {
         return fuelConsumption.getTotalConsumption();
     }
 
-    private int getValvePosition(double currentTemperature, int targetTemperature) {
+    private int getValvePosition(int currentTemperature, int targetTemperature) {
         if (currentTemperature < targetTemperature - 1) {
             return 2; // Открыть клапан
         } else if (currentTemperature > targetTemperature + 1) {

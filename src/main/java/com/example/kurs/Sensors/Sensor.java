@@ -6,5 +6,9 @@ public abstract class Sensor {
     public Sensor (String roomName) {
         this.roomName = roomName;
     }
-    public abstract Object getValue();
+    public abstract <T> T getValue();
+
+    public String getRoomName() {
+        return roomName;
+    }
 }

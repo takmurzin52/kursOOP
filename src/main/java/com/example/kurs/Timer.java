@@ -1,23 +1,20 @@
 package com.example.kurs;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.util.Duration;
+import java.time.DayOfWeek;
 
 public class Timer {
     private Timeline timeline;
     private int currentMinute;
     private String timeOfDay;
+    private int timeAcceleration;
+    private DayOfWeek currentDay;
 
-    public Timer() {
-        timeline = new Timeline(new KeyFrame(Duration.minutes(1), event -> {
-            currentMinute++;
-            System.out.println("Current minute: " + currentMinute + ", Time of day: " + timeOfDay);
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-        currentMinute = 0;
-        timeOfDay = "Ночь";
+    public void startTimer() {
+        this.timeAcceleration = 60;
+        currentMinute = 0;  // Инициализация на 0
+        timeOfDay = "Ночь";  // Начальное значение времени суток
+        currentDay = DayOfWeek.MONDAY;
     }
 
     private void updateTimeOfDay() {
@@ -27,12 +24,24 @@ public class Timer {
             timeOfDay = "Утро";
         } else if (currentMinute >= 12 * 60 && currentMinute < 18 * 60) {
             timeOfDay = "День";
-        } else {
+        } else if (currentMinute >= 18 * 60 && currentMinute < 24 * 60) {
             timeOfDay = "Вечер";
         }
         if (currentMinute >= 24 * 60) {
             currentMinute = 0;
+            timeOfDay = "Ночь";
+            incrementDay();
         }
+    }
+
+    public void incrementMinute(int minutes) {
+        currentMinute += minutes;
+        updateTimeOfDay();
+    }
+
+    public void incrementDay() {
+        // Переход к следующему дню недели, начиная с понедельника
+        currentDay = currentDay.plus(1);
     }
 
     public int getCurrentMinute() {
@@ -41,5 +50,15 @@ public class Timer {
 
     public String getTimeOfDay() {
         return timeOfDay;
+    }
+
+    public DayOfWeek getCurrentDay() {
+        return currentDay;  // Возвращаем текущий день недели
+    }
+
+    public void stopTimer() {
+        if (timeline != null) {
+            timeline.stop();
+        }
     }
 }

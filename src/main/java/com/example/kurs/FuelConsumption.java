@@ -8,10 +8,18 @@ public class FuelConsumption {
     }
 
     public void addConsumption(double consumption) {
-        totalConsumption += consumption;
+        if (consumption >= 0) {  // Проверка на отрицательные значения
+            totalConsumption += consumption;
+        } else {
+            System.out.println("Ошибка: расход топлива не может быть отрицательным.");
+        }
     }
 
     public double getTotalConsumption() {
         return totalConsumption;
+    }
+
+    public void resetConsumption() {
+        totalConsumption = 0;
     }
 }

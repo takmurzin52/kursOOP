@@ -66,17 +66,20 @@ public class HelloController {
 
     @FXML
     private void initialize() {
-        modeling = new Modeling();
-        modeling.initializeRooms();
-
         // Устанавливаем индивидуальные настройки для каждого Spinner
-        setupSpinner(spinnerLivingRoom, 19, 22, 19, 1);
-        setupSpinner(spinnerWorkRoom, 16, 25, 16, 1);
-        setupSpinner(spinnerKitchen, 17, 21, 17, 1);
-        setupSpinner(spinnerBathroom, 24, 26, 24, 1);
+        setupSpinner(spinnerLivingRoom, 18, 24, 18, 1);
+        setupSpinner(spinnerWorkRoom, 20, 25, 20, 1);
+        setupSpinner(spinnerKitchen, 17, 23, 17, 1);
+        setupSpinner(spinnerBathroom, 23, 27, 23, 1);
+    }
 
-        // Устанавливаем начальное значение для dayOfWeekLabel
-        dayOfWeekLabel.setText(modeling.getDayOfWeek());
+    public void setModeling(Modeling modeling) {
+        this.modeling = modeling;
+
+        // Установить начальное значение после инициализации modeling
+        if (dayOfWeekLabel != null) {
+            dayOfWeekLabel.setText(modeling.getDayOfWeek());
+        }
     }
 
     private void setupSpinner(Spinner<Integer> spinner, int min, int max, int initialValue, int step) {
@@ -104,12 +107,12 @@ public class HelloController {
     }
 
     @FXML
-    private void showScheduleDialog() {
+    private void showScheduleDialog(String roomName ) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ScheduleDialog.fxml"));
             Stage dialogStage = new Stage();
             dialogStage.setScene(new Scene(loader.load()));
-            dialogStage.setTitle("Установить расписание");
+            dialogStage.setTitle("Установить расписание: " + roomName);
             dialogStage.initModality(Modality.APPLICATION_MODAL);
 
             // Фиксируем размер окна
@@ -119,47 +122,64 @@ public class HelloController {
 
             ScheduleDialogController controller = loader.getController();
             controller.setModeling(modeling);
+            controller.setRoomName(roomName); // Передаем имя комнаты в контроллер
 
             // Ожидание закрытия диалога
             dialogStage.showAndWait();
-
-            boolean[] schedule = controller.getSchedule();
-            // Обработайте расписание (например, сохраните для комнаты)
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
+    private void openLivingRoomScheduleDialog() {
+        showScheduleDialog("Гостиная");
+    }
+    @FXML
+    private void openWorkRoomScheduleDialog() {
+        showScheduleDialog("Рабочий кабинет");
+    }
+    @FXML
+    private void openKitchenScheduleDialog() {
+        showScheduleDialog("Кухня");
+    }
+    @FXML
+    private void openBathroomScheduleDialog() {
+        showScheduleDialog("Ванная");
+    }
+
+    @FXML
     private void startSimulation() {
         modeling.startSimulation(this);
+        modeling.getTimer().startTimer();
+        startSimulationButton.setDisable(true);
+        stopSimulationButton.setDisable(false);
     }
 
     @FXML
     private void stopSimulation() {
         modeling.stopSimulation();
+        modeling.getTimer().stopTimer(); // останавливаем таймер
+        startSimulationButton.setDisable(false);
+        stopSimulationButton.setDisable(true);
     }
 
     protected void updateUI() {
-        // Обновление UI на основе данных из модели
-        workTemperatureLivingRoom.setText("Температура: " + modeling.getRoomTemperature("Гостиная") + "°C");
-        workTemperatureWorkRoom.setText("Температура: " + modeling.getRoomTemperature("Рабочий кабинет") + "°C");
-        workTemperatureKitchen.setText("Температура: " + modeling.getRoomTemperature("Кухня") + "°C");
-        workTemperatureBathroom.setText("Температура: " + modeling.getRoomTemperature("Ванная") + "°C");
+        updateRoomUI("Гостиная", workTemperatureLivingRoom, valveLivingRoom, presenceLivingRoom);
+        updateRoomUI("Рабочий кабинет", workTemperatureWorkRoom, valveWorkRoom, presenceWorkRoom);
+        updateRoomUI("Кухня", workTemperatureKitchen, valveKitchen, presenceKitchen);
+        updateRoomUI("Ванная", workTemperatureBathroom, valveBathroom, presenceBathroom);
 
-        valveLivingRoom.setFill(getValveColor(modeling.getValvePosition("Гостиная")));
-        valveWorkRoom.setFill(getValveColor(modeling.getValvePosition("Рабочий кабинет")));
-        valveKitchen.setFill(getValveColor(modeling.getValvePosition("Кухня")));
-        valveBathroom.setFill(getValveColor(modeling.getValvePosition("Ванная")));
-
-        presenceLivingRoom.setText("Присутствие людей: " + (modeling.isPresenceDetected("Гостиная") ? "+" : "-"));
-        presenceWorkRoom.setText("Присутствие людей: " + (modeling.isPresenceDetected("Рабочий кабинет") ? "+" : "-"));
-        presenceKitchen.setText("Присутствие людей: " + (modeling.isPresenceDetected("Кухня") ? "+" : "-"));
-        presenceBathroom.setText("Присутствие людей: " + (modeling.isPresenceDetected("Ванная") ? "+" : "-"));
-
+        // Обновление общих элементов интерфейса
         timeOfDayLabel.setText(modeling.getTimeOfDay());
-        dayOfWeekLabel.setText(modeling.getDayOfWeek());
+        dayOfWeekLabel.setText(modeling.getTimer().getCurrentDay().name());
         fuelConsumptionLabel.setText("" + modeling.getTotalFuelConsumption());
+    }
+
+    private void updateRoomUI(String roomName, Label temperatureLabel, Circle valve, Label presenceLabel) {
+        temperatureLabel.setText("Температура: " + modeling.getRoomTemperature(roomName) + "°C");
+        valve.setFill(getValveColor(modeling.getValvePosition(roomName)));
+        presenceLabel.setText("Присутствие людей: " + (modeling.isPresenceDetected(roomName) ? "+" : "-"));
     }
 
     private javafx.scene.paint.Color getValveColor(int position) {
@@ -169,9 +189,5 @@ public class HelloController {
             case 2: return javafx.scene.paint.Color.GREEN;
             default: return javafx.scene.paint.Color.BLACK;
         }
-    }
-
-    public void setModeling(Modeling modeling) {
-        this.modeling = modeling;
     }
 }

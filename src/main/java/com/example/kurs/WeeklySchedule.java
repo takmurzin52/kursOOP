@@ -1,20 +1,22 @@
 package com.example.kurs;
 
+import java.time.DayOfWeek;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WeeklySchedule {
-    private Map<String, Map<String, Boolean>> schedule;
-    private String[] daysOfWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
-    private int currentDayIndex = 0;
+    private Map<DayOfWeek, Map<String, Boolean>> schedule;
+    private DayOfWeek currentDay;
 
     public WeeklySchedule() {
-        schedule = new HashMap<>();
+        schedule = new EnumMap<>(DayOfWeek.class);
+        currentDay = DayOfWeek.MONDAY; // Начинаем с понедельника
         initializeSchedule();
     }
 
     private void initializeSchedule() {
-        for (String day : daysOfWeek) {
+        for (DayOfWeek day : DayOfWeek.values()) {
             Map<String, Boolean> daySchedule = new HashMap<>();
             daySchedule.put("Гостиная", false);
             daySchedule.put("Рабочий кабинет", false);
@@ -24,27 +26,33 @@ public class WeeklySchedule {
         }
     }
 
-    public void setPresence(String day, String room, boolean presence) {
+    public void setPresence(DayOfWeek day, String room, boolean presence) {
         if (schedule.containsKey(day)) {
             schedule.get(day).put(room, presence);
         }
     }
 
-    public boolean isPresence(String day, String room) {
+    public boolean isPresence(DayOfWeek day, String room) {
         if (schedule.containsKey(day)) {
             Map<String, Boolean> daySchedule = schedule.get(day);
-            if (daySchedule.containsKey(room)) {
-                return daySchedule.get(room);
-            }
+            return daySchedule.getOrDefault(room, false);
         }
         return false;
     }
 
-    public String getCurrentDay() {
-        return daysOfWeek[currentDayIndex];
+    // Получение расписания для текущего дня
+    public Map<String, Boolean> getDaySchedule(DayOfWeek day) {
+        return schedule.getOrDefault(day, new HashMap<>());
     }
 
-    public void nextDay() {
-        currentDayIndex = (currentDayIndex + 1) % daysOfWeek.length;
+    // Удобный метод для интеграции
+    public boolean isPresenceScheduled(DayOfWeek day) {
+        Map<String, Boolean> daySchedule = getDaySchedule(day);
+        return daySchedule.values().stream().anyMatch(Boolean::booleanValue);
+    }
+
+    // Получение текущего дня недели
+    public DayOfWeek getCurrentDay() {
+        return currentDay;
     }
 }
