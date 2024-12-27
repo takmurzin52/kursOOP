@@ -53,6 +53,10 @@ public class Timer {
     }
 
     public DayOfWeek getCurrentDay() {
+        if (currentDay == null) {
+            // Логика по умолчанию, если текущий день не установлен
+            currentDay = DayOfWeek.MONDAY;
+        }
         return currentDay;  // Возвращаем текущий день недели
     }
 

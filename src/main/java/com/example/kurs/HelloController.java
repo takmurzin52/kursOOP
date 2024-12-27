@@ -121,11 +121,11 @@ public class HelloController {
             dialogStage.setMinHeight(330); // Высота окна
 
             ScheduleDialogController controller = loader.getController();
-            controller.setModeling(modeling);
-            controller.setRoomName(roomName); // Передаем имя комнаты в контроллер
+            controller.setData(roomName, modeling.getWeeklySchedule(roomName));
 
             // Ожидание закрытия диалога
             dialogStage.showAndWait();
+            updateUI();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,6 +188,29 @@ public class HelloController {
             case 1: return javafx.scene.paint.Color.ORANGE;
             case 2: return javafx.scene.paint.Color.GREEN;
             default: return javafx.scene.paint.Color.BLACK;
+        }
+    }
+
+    public void updatePresenceLabel(String roomName, boolean presence) {
+        Label presenceLabel = getPresenceLabelForRoom(roomName); // Метод для получения нужного Label по имени комнаты
+        if (presenceLabel != null) {
+            presenceLabel.setText("Присутствие людей: " + (presence ? "+" : "-"));
+        }
+    }
+
+    // Метод для получения Label по имени комнаты
+    private Label getPresenceLabelForRoom(String roomName) {
+        switch (roomName) {
+            case "Гостиная":
+                return presenceLivingRoom; // Укажите соответствующий Label
+            case "Рабочий кабинет":
+                return presenceWorkRoom; // Укажите соответствующий Label
+            case "Кухня":
+                return presenceKitchen; // Укажите соответствующий Label
+            case "Ванная":
+                return presenceBathroom; // Укажите соответствующий Label
+            default:
+                return null;
         }
     }
 }

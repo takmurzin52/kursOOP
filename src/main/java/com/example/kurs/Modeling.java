@@ -41,16 +41,31 @@ public class Modeling {
         }
     }
 
-    public void setWeeklySchedule(DayOfWeek day, String room, boolean presence) {
-        weeklySchedule.setPresence(day, room, presence);
+    public void setWeeklySchedule(DayOfWeek day, String roomName, boolean presence) {
+        Room room = rooms.get(roomName);
+        if (room != null) {
+            room.getSchedule().setPresence(day, roomName, presence);
+        }
+    }
+
+    public WeeklySchedule getWeeklySchedule(String roomName) {
+        Room room = rooms.get(roomName);
+        return room != null ? room.getSchedule() : null;
     }
 
     public void startSimulation(HelloController controller) {
         simulationRunning = true;
+
+        // Синхронизация текущего дня
+        for (Room room : rooms.values()) {
+            room.getSchedule().setCurrentDay(timer.getCurrentDay());
+        }
+
         new Thread(() -> {
             while (simulationRunning) {
                 for (Room room : rooms.values()) {
-                    boolean presence = weeklySchedule.isPresence(weeklySchedule.getCurrentDay(), room.getName()) || room.isPresenceDetected();
+                    WeeklySchedule schedule = room.getSchedule();
+                    boolean presence = schedule.isPresence(schedule.getCurrentDay(), room.getName());
                     int targetTemperature = presence ? room.getWorkTemperature() : room.getWaitTemperature();
 
                     room.setValvePosition(getValvePosition(room.getTemperature(), targetTemperature));
@@ -59,6 +74,10 @@ public class Modeling {
                     // Расчет потребления топлива
                     double consumption = room.getArea() * (room.getValvePosition() == 0 ? 0 : room.getValvePosition() == 1 ? 2 : 5);
                     fuelConsumption.addConsumption(consumption);
+
+                    // Обновление UI информации о присутствии
+                    boolean finalPresence = presence;
+                    Platform.runLater(() -> controller.updatePresenceLabel(room.getName(), finalPresence));
                 }
                 // Обновление интерфейса
                 Platform.runLater(controller::updateUI);
@@ -70,9 +89,15 @@ public class Modeling {
                 System.out.println("Текущая минута: " + timer.getCurrentMinute() + ", Время суток: " + timer.getTimeOfDay());
 
                 // Переход к следующему дню
-                if (timer.getCurrentMinute() >= 1440) {  // 1440 минут = 24 часа
-                    timer.incrementDay();  // Переход к следующему дню
-                    timer.incrementMinute(-1440);  // Сбрасываем минуты на начало дня (0)
+                if (timer.getCurrentMinute() >= 1440) {
+                    timer.incrementDay();
+                    timer.incrementMinute(-1440);
+
+                    // Обновляем текущий день во всех расписаниях
+                    for (Room room : rooms.values()) {
+                        WeeklySchedule schedule = room.getSchedule();
+                        schedule.setCurrentDay(timer.getCurrentDay());
+                    }
                 }
 
                 // Ожидание одной симуляционной минуты (1 секунда реального времени)

@@ -2,8 +2,11 @@ package com.example.kurs;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.stage.Stage;
 
 import java.time.DayOfWeek;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScheduleDialogController {
     @FXML
@@ -20,62 +23,47 @@ public class ScheduleDialogController {
     private CheckBox saturdayCheckBox;
     @FXML
     private CheckBox sundayCheckBox;
-
-    private Modeling modeling;
     private String roomName;
-    private boolean[] schedule = new boolean[7]; // Хранит статусы для каждого дня
+    private WeeklySchedule schedule;
+
+    public void setData(String roomName, WeeklySchedule schedule) {
+        this.roomName = roomName;
+        this.schedule = schedule;
+        loadSchedule();
+    }
+
+    private void loadSchedule() {
+        for (DayOfWeek day : DayOfWeek.values()) {
+            boolean presence = schedule.isPresence(day, roomName);
+            getCheckBox(day).setSelected(presence);
+        }
+    }
+
+    private CheckBox getCheckBox(DayOfWeek day) {
+        switch (day) {
+            case MONDAY: return mondayCheckBox;
+            case TUESDAY: return tuesdayCheckBox;
+            case WEDNESDAY: return wednesdayCheckBox;
+            case THURSDAY: return thursdayCheckBox;
+            case FRIDAY: return fridayCheckBox;
+            case SATURDAY: return saturdayCheckBox;
+            case SUNDAY: return sundayCheckBox;
+            default: throw new IllegalArgumentException("Неподдерживаемый день: " + day);
+        }
+    }
 
     @FXML
     private void saveSchedule() {
-        if (modeling != null && roomName != null) {
-        // Сохраняем выбор пользователя
-        schedule[0] = mondayCheckBox.isSelected();
-        schedule[1] = tuesdayCheckBox.isSelected();
-        schedule[2] = wednesdayCheckBox.isSelected();
-        schedule[3] = thursdayCheckBox.isSelected();
-        schedule[4] = fridayCheckBox.isSelected();
-        schedule[5] = saturdayCheckBox.isSelected();
-        schedule[6] = sundayCheckBox.isSelected();
-
-        // Устанавливаем расписание в модели
-        modeling.setWeeklySchedule(DayOfWeek.MONDAY, roomName, schedule[0]);
-        modeling.setWeeklySchedule(DayOfWeek.TUESDAY, roomName, schedule[1]);
-        modeling.setWeeklySchedule(DayOfWeek.WEDNESDAY, roomName, schedule[2]);
-        modeling.setWeeklySchedule(DayOfWeek.THURSDAY, roomName, schedule[3]);
-        modeling.setWeeklySchedule(DayOfWeek.FRIDAY, roomName, schedule[4]);
-        modeling.setWeeklySchedule(DayOfWeek.SATURDAY, roomName, schedule[5]);
-        modeling.setWeeklySchedule(DayOfWeek.SUNDAY, roomName, schedule[6]);
-
-        // Закрыть окно после сохранения
-        mondayCheckBox.getScene().getWindow().hide();
+        Map<DayOfWeek, Boolean> newSchedule = new HashMap<>();
+        for (DayOfWeek day : DayOfWeek.values()) {
+            boolean presence = getCheckBox(day).isSelected();
+            schedule.setPresence(day, roomName, presence);
         }
-        else {
-            System.err.println("Объект моделирования не инициализирован.");
-        }
+        closeWindow();
     }
 
-    public void setModeling(Modeling modeling) {
-        this.modeling = modeling;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
-
-    public boolean[] getSchedule() {
-        return schedule; // Возвращает массив с расписанием
-    }
-
-    public void initializeSchedule(boolean[] existingSchedule) {
-        // Инициализируем чекбоксы согласно текущему расписанию
-        if (existingSchedule != null && existingSchedule.length == 7) {
-            mondayCheckBox.setSelected(existingSchedule[0]);
-            tuesdayCheckBox.setSelected(existingSchedule[1]);
-            wednesdayCheckBox.setSelected(existingSchedule[2]);
-            thursdayCheckBox.setSelected(existingSchedule[3]);
-            fridayCheckBox.setSelected(existingSchedule[4]);
-            saturdayCheckBox.setSelected(existingSchedule[5]);
-            sundayCheckBox.setSelected(existingSchedule[6]);
-        }
+    private void closeWindow() {
+        Stage stage = (Stage) mondayCheckBox.getScene().getWindow();
+        stage.close();
     }
 }

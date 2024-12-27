@@ -18,7 +18,7 @@ public class PresenceSensor extends Sensor {
         // Получаем текущий день недели
         DayOfWeek currentDay = LocalDate.now().getDayOfWeek();
         // Определяем присутствие на основе расписания
-        return schedule.isPresenceScheduled(currentDay);
+        return schedule.isPresence(currentDay, getRoomName());
     }
 
     public boolean isPresenceDetected() {

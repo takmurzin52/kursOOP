@@ -14,6 +14,7 @@ public class Room {
     private int workTemperature;
     private int waitTemperature;
     private int M;
+    private WeeklySchedule schedule; // Индивидуальное расписание
 
     public Room(String name, double area, double constant, int minTemperature, int maxTemperature, WeeklySchedule schedule) {
         this.name = name;
@@ -23,6 +24,11 @@ public class Room {
         this.valve = new Valve(name, 0);
         this.temperatureSensor = new TemperatureSensor(name, minTemperature, maxTemperature);
         this.presenceSensor = new PresenceSensor(name, schedule);
+        this.schedule = new WeeklySchedule(); // Создаём индивидуальное расписание
+    }
+
+    public WeeklySchedule getSchedule() {
+        return schedule;
     }
 
     public void setWorkTemperature(int workTemperature) {

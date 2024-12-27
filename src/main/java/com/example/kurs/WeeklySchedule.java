@@ -26,23 +26,31 @@ public class WeeklySchedule {
         }
     }
 
-    public void setPresence(DayOfWeek day, String room, boolean presence) {
+    public void setPresence(DayOfWeek day, String roomName, boolean presence) {
         if (schedule.containsKey(day)) {
-            schedule.get(day).put(room, presence);
+            Map<String, Boolean> daySchedule = schedule.get(day);
+            if (daySchedule != null) {
+                daySchedule.put(roomName, presence); // Сохраняем обновление
+            }
         }
     }
 
-    public boolean isPresence(DayOfWeek day, String room) {
-        if (schedule.containsKey(day)) {
-            Map<String, Boolean> daySchedule = schedule.get(day);
-            return daySchedule.getOrDefault(room, false);
-        }
-        return false;
+    public boolean isPresence(DayOfWeek day, String roomName) {
+        Map<String, Boolean> daySchedule = schedule.get(day);
+        return daySchedule != null && daySchedule.getOrDefault(roomName, false);
     }
 
     // Получение расписания для текущего дня
     public Map<String, Boolean> getDaySchedule(DayOfWeek day) {
         return schedule.getOrDefault(day, new HashMap<>());
+    }
+
+    public Map<DayOfWeek, Boolean> getRoomSchedule(String roomName) {
+        Map<DayOfWeek, Boolean> roomSchedule = new EnumMap<>(DayOfWeek.class);
+        for (DayOfWeek day : DayOfWeek.values()) {
+            roomSchedule.put(day, schedule.get(day).getOrDefault(roomName, false));
+        }
+        return roomSchedule;
     }
 
     // Удобный метод для интеграции
@@ -54,5 +62,8 @@ public class WeeklySchedule {
     // Получение текущего дня недели
     public DayOfWeek getCurrentDay() {
         return currentDay;
+    }
+    public void setCurrentDay(DayOfWeek day) {
+        this.currentDay = day;
     }
 }
